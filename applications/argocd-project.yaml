@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dev
+  namespace: argocd
+spec:
+  description: Development environment
+  sourceRepos:
+    - https://github.com/aliakkas006/microservices-gitops-k8s.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: todo
+    - server: https://kubernetes.default.svc
+      namespace: kafka
+    - server: https://kubernetes.default.svc
+      namespace: postgresql
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  syncWindows:
+    - kind: allow
+      schedule: '* * * * *'
+      duration: 24h
+      applications:
+        - '*'

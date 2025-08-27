@@ -1,0 +1,61 @@
+# charts/todo-app/values.yaml
+replicaCount: 2
+
+image:
+  repository: aliakkas006255/todo
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  className: cilium
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: todo.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: todo-app-tls
+      hosts:
+        - todo.example.com
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+postgresql:
+  enabled: true
+  auth:
+    database: postgres
+    username: admin
+    password: password
+
+kafka:
+  enabled: true
+  replicaCount: 3
