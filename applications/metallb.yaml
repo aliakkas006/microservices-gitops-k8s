@@ -3,25 +3,14 @@ kind: Application
 metadata:
   name: metallb
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: dev
+  project: cluster-infra
   source:
-    repoURL: https://metallb.github.io/metallb
-    chart: metallb
-    targetRevision: 0.14.5
-    helm:
-      releaseName: metallb
-      values: |
-        configInline:
-          address-pools:
-            - name: default
-              protocol: layer2
-              addresses:
-                - 192.168.56.150-192.168.56.200
+    repoURL: https://raw.githubusercontent.com/metallb/metallb/v0.13.14/manifests
+    targetRevision: v0.13.14
+    path: .
   destination:
     server: https://kubernetes.default.svc
     namespace: metallb-system
@@ -31,8 +20,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true
-
-
-
-

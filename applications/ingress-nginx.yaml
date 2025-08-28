@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: dev
+  project: cluster-infra
   source:
     repoURL: https://kubernetes.github.io/ingress-nginx
     targetRevision: 4.11.2
@@ -15,18 +15,13 @@ spec:
       releaseName: ingress-nginx
       values: |
         controller:
-          replicaCount: 2
           service:
             type: LoadBalancer
-            loadBalancerIP: 192.168.56.150 # MetalLB IP
-          ingressClassResource:
-            default: true
+            loadBalancerIP: 192.168.56.150
           admissionWebhooks:
             enabled: true
           metrics:
             enabled: true
-            serviceMonitor:
-              enabled: false # set true if Prometheus Operator is installed
           extraArgs:
             enable-ssl-passthrough: ""
   destination:
