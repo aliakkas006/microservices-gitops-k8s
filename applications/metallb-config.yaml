@@ -1,8 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: todo-dev
+  name: metallb-config
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -10,28 +12,15 @@ spec:
   source:
     repoURL: https://github.com/aliakkas006/microservices-gitops-k8s.git
     targetRevision: main
-    path: charts/todo
-    helm:
-      valueFiles:
-        - values-dev.yaml
-      parameters:
-        - name: image.tag
-          value: v1.0.0
+    path: infra/metallb
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: todo
+    namespace: metallb-system
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    retry:
-      limit: 5
-      backoff:
-        duration: 30s
-        factor: 2
-        maxDuration: 5m
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-        - /spec/replicas
+    syncOptions:
+      - ServerSideApply=true

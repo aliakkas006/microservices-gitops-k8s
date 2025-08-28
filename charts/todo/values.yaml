@@ -1,20 +1,31 @@
-# charts/todo-app/values.yaml
 replicaCount: 2
 
 image:
-  repository: aliakkas006255/todo
-  tag: latest
+  repository: aliakkas006255/backend-go
+  tag: 58e9015ec497d5b093bc0450abf89d55f1b1731f
   pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
   port: 8000
 
+# NGINX ingress controller
+ingressNginx:
+  enabled: true
+  controller:
+    replicaCount: 2
+    service:
+      type: LoadBalancer
+    metrics:
+      enabled: true
+    watchIngressWithoutClass: true
+
 ingress:
   enabled: true
-  className: cilium
+  className: nginx
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
   hosts:
     - host: todo.example.com
       paths:
@@ -50,12 +61,12 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 postgresql:
-  enabled: true
+  enabled: false
   auth:
     database: postgres
     username: admin
     password: password
 
 kafka:
-  enabled: true
+  enabled: false
   replicaCount: 3

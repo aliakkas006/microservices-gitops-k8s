@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-config
+  name: namespaces-config
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,14 +9,12 @@ spec:
   project: default
   source:
     repoURL: https://github.com/aliakkas006/microservices-gitops-k8s.git
-    targetRevision: HEAD
+    targetRevision: main
     path: manifests/namespaces
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: "" 
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true

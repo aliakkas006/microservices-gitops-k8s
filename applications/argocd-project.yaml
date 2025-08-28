@@ -7,6 +7,7 @@ spec:
   description: Development environment
   sourceRepos:
     - https://github.com/aliakkas006/microservices-gitops-k8s.git
+
   destinations:
     - server: https://kubernetes.default.svc
       namespace: todo
@@ -14,15 +15,12 @@ spec:
       namespace: kafka
     - server: https://kubernetes.default.svc
       namespace: postgresql
+    - server: https://kubernetes.default.svc
+      namespace: metallb-system 
+      
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
   namespaceResourceWhitelist:
     - group: '*'
       kind: '*'
-  syncWindows:
-    - kind: allow
-      schedule: '* * * * *'
-      duration: 24h
-      applications:
-        - '*'

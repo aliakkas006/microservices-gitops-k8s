@@ -75,13 +75,11 @@ Create the namespace to use
 Create the full image name with tag
 */}}
 {{- define "todo.image" -}}
-{{- $tag := default .Chart.AppVersion .Values.image.tag }}
-{{- if contains ":" $tag }}
-{{- printf "%s%s" .Values.image.repository $tag }}
-{{- else }}
-{{- printf "%s:%s" .Values.image.repository $tag }}
+{{- $tag := default .Chart.AppVersion .Values.image.tag -}}
+{{- printf "%s:%s" .Values.image.repository $tag -}}
 {{- end }}
-{{- end }}
+
+
 
 {{/*
 Generate environment variables from values
