@@ -35,7 +35,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: email-api
-          image: aliakkas006255/email-api:2a3f8b4400aa25eda51a2255102af11ed8c21674
+          image: aliakkas006255/email-service-api:2a3f8b4400aa25eda51a2255102af11ed8c21674
           securityContext:
             allowPrivilegeEscalation: false
           imagePullPolicy: Always
