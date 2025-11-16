@@ -15,4 +15,4 @@ spec:
             value: /api/users
       backendRefs:
         - name: user-api-svc
-          port: 8000
+          port: 5000
