@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-api-deployment
+  namespace: development
+  labels:
+    app: user-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: user-api
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - user-api
+                topologyKey: kubernetes.io/hostname
+      restartPolicy: Always
+      containers:
+        - name: user-api
+          image: aliakkas006255/user-api:2a3f8b4400aa25eda51a2255102af11ed8c21674
+          securityContext:
+            allowPrivilegeEscalation: false
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: '300M'
+              cpu: '100m'
+            limits:
+              memory: '500M'
+              cpu: '200m'
+          env:
+            - name: TZ
+              value: 'UTC'
+          envFrom:
+            - configMapRef:
+                name: user-api-configmap
+            - secretRef:
+                name: user-api-secret
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8000
+            failureThreshold: 15
+            periodSeconds: 20
+            timeoutSeconds: 3
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
