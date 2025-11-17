@@ -16,3 +16,11 @@ spec:
       backendRefs:
         - name: todo-api-svc
           port: 8000
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /health
+      backendRefs:
+        - name: todo-api-svc
+          port: 8000
