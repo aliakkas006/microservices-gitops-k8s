@@ -35,7 +35,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: todo-api
-          image: aliakkas006255/todo-api:2a3f8b4400aa25eda51a2255102af11ed8c21674
+          image: aliakkas006255/todo-api:607a7986ed8c1b23d8a14998ff2942fd741442f4
           securityContext:
             allowPrivilegeEscalation: false
           imagePullPolicy: Always
