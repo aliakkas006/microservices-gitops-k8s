@@ -12,7 +12,7 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /api/users # /user/health
+            value: /api/users
       backendRefs:
         - name: user-api-svc
           port: 5000
