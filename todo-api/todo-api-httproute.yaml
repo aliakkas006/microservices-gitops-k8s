@@ -20,7 +20,7 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /todo/health
+            value: /health
       backendRefs:
         - name: todo-api-svc
           port: 8000

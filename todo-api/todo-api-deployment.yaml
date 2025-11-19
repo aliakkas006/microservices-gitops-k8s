@@ -35,7 +35,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: todo-api
-          image: aliakkas006255/todo-api:607a7986ed8c1b23d8a14998ff2942fd741442f4
+          image: aliakkas006255/todo-api:1ecb72ec3eb7f2ef3e35cef75e2110a1141b1f8f
           securityContext:
             allowPrivilegeEscalation: false
           imagePullPolicy: Always
@@ -58,7 +58,7 @@ spec:
                 name: todo-api-secret
           startupProbe:
             httpGet:
-              path: /todo/health
+              path: /health
               port: 8000
             failureThreshold: 15
             periodSeconds: 20
@@ -66,7 +66,7 @@ spec:
             initialDelaySeconds: 60
           readinessProbe:
             httpGet:
-              path: /todo/health
+              path: /health
               port: 8000
             initialDelaySeconds: 30
             periodSeconds: 20
@@ -75,7 +75,7 @@ spec:
             successThreshold: 1
           livenessProbe:
             httpGet:
-              path: /todo/health
+              path: /health
               port: 8000
             initialDelaySeconds: 30
             periodSeconds: 20
