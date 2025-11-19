@@ -5,7 +5,7 @@ metadata:
   namespace: development
 spec:
   parentRefs:
-    - name: dev-gateway
+    - name: todo-gateway
       namespace: nginx-gateway
 
   rules:

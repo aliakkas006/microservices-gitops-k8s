@@ -5,7 +5,7 @@ metadata:
   namespace: development
 spec:
   parentRefs:
-    - name: dev-gateway
+    - name: user-gateway
       namespace: nginx-gateway
 
   rules:
@@ -16,7 +16,7 @@ spec:
       backendRefs:
         - name: user-api-svc
           port: 5000
-    
+
     - matches:
         - path:
             type: PathPrefix
