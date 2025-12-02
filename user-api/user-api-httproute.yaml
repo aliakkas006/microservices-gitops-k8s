@@ -20,7 +20,7 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /health
+            value: /user/health
       backendRefs:
         - name: user-api-svc
           port: 5000
