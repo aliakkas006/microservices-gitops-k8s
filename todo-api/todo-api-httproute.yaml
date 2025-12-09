@@ -5,8 +5,8 @@ metadata:
   namespace: development
 spec:
   parentRefs:
-    - name: dev-gateway
-      namespace: nginx-gateway
+    - name: traefik-gateway
+      namespace: traefik
 
   rules:
     - matches:
