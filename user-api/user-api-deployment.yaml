@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: user-api-deployment
-  namespace: development
+  namespace: production
   labels:
     app: user-api
 spec:
@@ -35,7 +35,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: user-api
-          image: aliakkas006255/user-api:722f95682137ef5d7af5a7bcb53b79126386bf10
+          image: 316749727990.dkr.ecr.ap-southeast-1.amazonaws.com/user-app:1.0
           securityContext:
             allowPrivilegeEscalation: false
           imagePullPolicy: Always

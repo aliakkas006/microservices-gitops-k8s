@@ -2,7 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: email-api-hpa
-  namespace: development
+  namespace: production
   labels:
     app: email-api
 spec:
